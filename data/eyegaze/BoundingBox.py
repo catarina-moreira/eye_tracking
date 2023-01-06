@@ -39,13 +39,14 @@ class BoundingBox(Annotation):
     super().plot_shape_and_point(x,y)
 
     ax = plt.axes()
-    #ax.invert_yaxis()
+    
 
     if xray_path:
       img = plt.imread( xray_path )
       ax.imshow(img, cmap=plt.cm.bone)  
-      plt.xlim([0, img.shape[0]])
-      plt.ylim([0, img.shape[1]])
+      plt.xlim([0, img.shape[1]])
+      plt.ylim([0, img.shape[0]])
+      ax.invert_yaxis()
     else:
       plt.xlim([0, 2700])
       plt.ylim([0, 3000])
