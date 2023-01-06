@@ -19,7 +19,7 @@ class Xray():
 		self.jpg_path : str = jpg_path
 		self.bbox : list = bbox
 		img = self.dicom2array()
-		self.dims : int = img.shape
+		self.dims = img.shape
 
 	def dicom2array(self, voi_lut=True, fix_monochrome=True):
 		
