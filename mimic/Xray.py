@@ -57,9 +57,8 @@ class Xray():
 		plt.imshow(data, cmap=plt.cm.bone)
 		plt.show()
 
-
 	def plot_annotations(self, label = False, figsize=(15, 20), fontsize=16):
-  	
+  		
 		# set figure size
 		plt.figure(figsize=(figsize))
 		ax = plt.axes()
