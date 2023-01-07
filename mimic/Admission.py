@@ -41,7 +41,6 @@ class Admission(object):
 		self.__hospital_expire_flag : int = None
 		
 
-
 	## GETTERS AND SETTERS
 	def setEdstay_list(self, edstay_list : EDStay):
 		self.__edstay_list = edstay_list

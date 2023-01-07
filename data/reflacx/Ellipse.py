@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from Constants import Constants as c
-from mimic.Annotation import Annotation
+from mediator.Annotation import Annotation
 
 class Ellipse(Annotation):
 

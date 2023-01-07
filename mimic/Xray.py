@@ -5,7 +5,7 @@ import pydicom
 import pydicom.data
 from pydicom.pixel_data_handlers.util import apply_voi_lut
 
-from mimic.Annotation import Annotation
+from mediator.Annotation import Annotation
 
 from data.eyegaze import BoundingBox
 
