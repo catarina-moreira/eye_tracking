@@ -43,6 +43,13 @@ class Annotation(ABC):
     """plots a shape and point"""
     pass
 
+  @abstractmethod
+  def plot_shape(self):
+    pass
+
+
+  def getCoordinates(self):
+    return [ self.xmin, self.xmax, self.ymin, self.ymax]
 
   def getXmin(self):
     return self.xmin
