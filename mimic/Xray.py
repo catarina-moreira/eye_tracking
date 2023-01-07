@@ -20,7 +20,7 @@ class Xray():
 		self.report : str = report
 		self.dicom_path : str = dicom_path
 		self.jpg_path : str = jpg_path
-		self.bbox : list = annotation_lst
+		self.annotation_lst : list = annotation_lst
 		img = self.dicom2array()
 		self.dims = img.shape
 
@@ -58,27 +58,31 @@ class Xray():
 		plt.show()
 
 
-	def plot_annotations(self):
+	def plot_annotations(self, label = False, figsize=(15, 20), fontsize=16):
   	
+		# set figure size
+		plt.figure(figsize=(figsize))
 		ax = plt.axes()
+
+		# plot xray image
+		img = plt.imread( self.jpg_path )
+		ax.imshow(img, cmap=plt.cm.bone) 
+
+		# set the x and y limits of the plot
+		plt.xlim([0, img.shape[1]])
+		plt.ylim([0, img.shape[0]])
+
+		# invert the y axis so that the origin is in the top left
+		ax.invert_yaxis()
 
 		# for each annotation in the annotation list, plot it over the xray
 		for annotation in self.annotation_lst:
-			xmin, xmax, ymin, ymax = annotation.getCoordinates()
-			label = annotation.getLabel()
+			ax = annotation.plot_shape(ax, label, fontsize)
 
-			if type(BoundingBox()) == annotation.getType():
-				ax.plot([self.xmin, self.xmax, self.xmax, self.xmin, self.xmin], \
-								[self.ymin, self.ymin, self.ymax, self.ymax, self.ymin], c = c.COLOR_MAP[self.label.upper()])
-								
-				
-
-					
-
-				
-  		
-  		
-
+		# show the plot
+		plt.tight_layout()
+		plt.show()
+		
 	def show_report(self):
 		print(self.report)
 

@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
+import matplotlib.pyplot as plt
 import numpy as np
 import math
-
 
 class Annotation(ABC):
 
@@ -44,9 +44,8 @@ class Annotation(ABC):
     pass
 
   @abstractmethod
-  def plot_shape(self):
+  def plot_shape(self, ax : plt.axes, label : bool = False, fontsize : int = 10):
     pass
-
 
   def getCoordinates(self):
     return [ self.xmin, self.xmax, self.ymin, self.ymax]
