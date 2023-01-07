@@ -5,11 +5,14 @@ import pydicom
 import pydicom.data
 from pydicom.pixel_data_handlers.util import apply_voi_lut
 
+from mimic.Annotation import Annotation
+
 from data.eyegaze import BoundingBox
+
 from Constants import Constants as c
 
 class Xray():
-	def __init__(self, dicom_id : str, study_id : str, report : str, dicom_path : str, jpg_path : str, bbox : list):
+	def __init__(self, dicom_id : str, study_id : str, report : str, dicom_path : str, jpg_path : str, annotation_lst : list):
   	
 		# The Xray ID corresponds to the DICOM filename
 		self.ID : str = dicom_id
@@ -17,7 +20,7 @@ class Xray():
 		self.report : str = report
 		self.dicom_path : str = dicom_path
 		self.jpg_path : str = jpg_path
-		self.bbox : list = bbox
+		self.bbox : list = annotation_lst
 		img = self.dicom2array()
 		self.dims = img.shape
 
@@ -54,8 +57,30 @@ class Xray():
 		plt.imshow(data, cmap=plt.cm.bone)
 		plt.show()
 
-	def show_report(self, ID : str):
-		pass
+
+	def plot_annotations(self):
+  	
+		ax = plt.axes()
+
+		# for each annotation in the annotation list, plot it over the xray
+		for annotation in self.annotation_lst:
+			xmin, xmax, ymin, ymax = annotation.getCoordinates()
+			label = annotation.getLabel()
+
+			if type(BoundingBox()) == annotation.getType():
+				ax.plot([self.xmin, self.xmax, self.xmax, self.xmin, self.xmin], \
+								[self.ymin, self.ymin, self.ymax, self.ymax, self.ymin], c = c.COLOR_MAP[self.label.upper()])
+								
+				
+
+					
+
+				
+  		
+  		
+
+	def show_report(self):
+		print(self.report)
 
 	def setReport(self, report : str):
 		self.report = report
