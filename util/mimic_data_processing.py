@@ -1,6 +1,7 @@
 
 
 import pandas as pd
+import numpy as np
 
 from Constants import Constants as c
 
@@ -12,10 +13,22 @@ def join_patients_mimic_core_data(patient_id : str, eye_gaze_df : pd.DataFrame):
 
     try:
       mimic_core_tmp = pd.read_csv( c.MIMIC_CORE_PATH(c.DATASET_PATH, patient_id, core_table) )
-      mimic_core = mimic_core.merge(mimic_core_tmp, on="subject_id")
     except:
       print(f"[WARNING] Patient {patient_id} does not contain database file {core_table}")
-      continue
+      print("Adding admissions file with empty columns")
+
+      admin_cols = ["Unnamed: 0","subject_id","hadm_id","admittime","dischtime","deathtime","admission_type","admission_location","discharge_location","insurance","language","marital_status","race","edregtime","edouttime","hospital_expire_flag"]
+      mimic_core_tmp = pd.DataFrame(-1*np.ones((1,len(admin_cols))),columns=admin_cols)
+      mimic_core_tmp.loc[0,"subject_id"] = patient_id 
+      mimic_core["subject_id"] = mimic_core["subject_id"].astype(int)
+      mimic_core_tmp.to_csv(c.MIMIC_CORE_PATH(c.DATASET_PATH, patient_id, core_table), index=False)
+    
+    try:
+      mimic_core = mimic_core.merge(mimic_core_tmp, on="subject_id")
+    except:
+      print("This line raised an error")
+      print(mimic_core_tmp)
+
   mimic_core.rename(columns = {'subject_id':'patient_id'}, inplace = True)
   return mimic_core.merge(eye_gaze_df, on="patient_id")
 

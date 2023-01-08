@@ -30,7 +30,11 @@ class Xray():
 		# each Xray is stored in a JPG file located in the JPG_PATH
 		self.jpg_path : str = c.MIMIC_JPG_PATH(c.DATASET_PATH, patient_key,study_id, dicom_id)
 		# getting the dimensions of the Xray image
-		self.dims = self.dicom2array().shape
+		try:
+			self.dims = self.dicom2array().shape
+		except:
+			print(f"[WARNING] Patient {patient_key} does not contain DICOM file {self.dicom_path}")
+			self.dims = (0,0)
 
 		# each Xray can have multiple annotations from different radiologists
 		self.annotation_lst : list = annotation_lst

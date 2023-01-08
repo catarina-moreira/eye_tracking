@@ -35,7 +35,7 @@ class Patient():
 	def get_xray_ids(self):
 		ids = []
 		for xray in self.xray_lst:
-			ids.append(xray.get_id())
+			ids.append(xray.getID())
 		return ids
 
  # Getters and Setters --------------------------------------------
