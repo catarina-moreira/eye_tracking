@@ -32,7 +32,11 @@ class Patient():
 		"""add_xray_lst function"""
 		self.xray_lst.append(xray_lst)
 
-
+	def get_xray_ids(self):
+		ids = []
+		for xray in self.xray_lst:
+			ids.append(xray.get_id())
+		return ids
 
  # Getters and Setters --------------------------------------------
 	def getID(self):
@@ -113,7 +117,7 @@ class Patient():
 
 	def setXray_lst(self, new_xray_lst : list):
 		"""setXray_study_dict function"""
-		self.xray_dict = new_xray_lst
+		self.xray_lst = new_xray_lst
 
 	def getXray_lst(self):
 		"""getXray_study_dict function"""
