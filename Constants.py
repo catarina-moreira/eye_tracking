@@ -52,6 +52,8 @@ class Constants():
 						"OVERLAP" : [],							# lists the patient ids that overlap both datasets
 						"PATIENTS" : {},						# dictionary containing all information about a single patient
 						"XRAY_TO_PATIENT" 	: {},		# dictionary mapping an XRayID to a PatientID
+						"XRAY_TO_FIXATIONS" : {},		# dictionary mapping an XRayID to a list of Fixation files
+						"XRAY_TO_GAZE" : {},			  # dictionary mapping an XRayID to a list of Gaze files
 						"XRAY_TO_DIAGNOSIS" : {},		# dictionary mapping an XRayID to a Diagnosis (Eye Gaze only)
 						"XRAY_TO_ABNORMALITY" : {},	# dictionary mapping an XRayID to an Abnormality (REFLACX only)
 	}
@@ -69,21 +71,21 @@ class Constants():
 			"aluminium": [ '#eeeeec', '#d3d7cf', '#babdb6', '#888a85', '#555753', '#2e3436'],}
 
 	COLOR_MAP = {
-    "CARDIAC SILHOUETTE" : "#D98880",
-    "LEFT CLAVICLE" : "#AF7AC5",
-    "RIGHT CLAVICLE" : "#AF7AC5",
+    "CARDIAC SILHOUETTE" 			: "#D98880",
+    "LEFT CLAVICLE" 					: "#AF7AC5",
+    "RIGHT CLAVICLE" 					: "#AF7AC5",
     "LEFT COSTOPHRENIC ANGLE" : "#3498DB",
-    "RIGHT COSTOPHRENIC ANGLE" : "#3498DB",
-    "LEFT HILAR STRUCTURES" : "#76D7C4",
-    "RIGHT HILAR STRUCTURES" : "#76D7C4",
-    "LEFT LOWER LUNG ZONE" : "#F4D03F",
-    "RIGHT LOWER LUNG ZONE" : "#F4D03F",
-    "LEFT LUNG" : "#F4F6F7",
-    "RIGHT LUNG" : "#F4F6F7",
-    "LEFT MID LUNG ZONE" : "#F39C12",
-    "RIGHT MID LUNG ZONE" : "#F39C12",
-    "LEFT UPPER LUNG ZONE" : "#27AE60",
-    "RIGHT UPPER LUNG ZONE" : "#27AE60",
-    "TRACHEA" : "#F9E79F",
-    "UPPER MEDIASTINUM" : "#AED6F1"
+    "RIGHT COSTOPHRENIC ANGLE": "#3498DB",
+    "LEFT HILAR STRUCTURES" 	: "#76D7C4",
+    "RIGHT HILAR STRUCTURES" 	: "#76D7C4",
+    "LEFT LOWER LUNG ZONE" 		: "#F4D03F",
+    "RIGHT LOWER LUNG ZONE" 	: "#F4D03F",
+    "LEFT LUNG" 							: "#F4F6F7",
+    "RIGHT LUNG" 							: "#F4F6F7",
+    "LEFT MID LUNG ZONE" 			: "#F39C12",
+    "RIGHT MID LUNG ZONE" 		: "#F39C12",
+    "LEFT UPPER LUNG ZONE" 		: "#27AE60",
+    "RIGHT UPPER LUNG ZONE" 	: "#27AE60",
+    "TRACHEA" 								: "#F9E79F",
+    "UPPER MEDIASTINUM" 			: "#AED6F1",
 }
