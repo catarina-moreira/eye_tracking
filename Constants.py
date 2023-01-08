@@ -1,5 +1,6 @@
 
 import matplotlib
+import matplotlib.pyplot as plt
 import os
 
 class Constants():
@@ -7,6 +8,9 @@ class Constants():
 	# only change this path!
 	# main path where the dataset is stored
 	DATASET_PATH = os.path.join("/", "Volumes", "SD_DISK", "XAMI-MIMICv2.0", "")
+
+	# patient main path
+	PATIENT_PATH = lambda dataset_path, patient_id: os.path.join(dataset_path, "patient_" + str(patient_id))
 
 	# mimic core path
 	MIMIC_CORE_TABLES = ["patients", "admissions", "transfers"]
@@ -32,6 +36,11 @@ class Constants():
 
 	# eye gaze bounding boxes
 	EYE_GAZE_BBOX_PATH = lambda dataset_path, patient_id : os.path.join(dataset_path, "patient_" + str(patient_id), "EyeGaze", "bounding_boxes.csv" )
+	EYE_GAZE_FIXATIONS_PATH = lambda dataset_path, patient_id : os.path.join(dataset_path, "patient_" + str(patient_id), "EyeGaze", "fixations.csv" )
+	EYE_GAZE_RAW_PATH = lambda dataset_path, patient_id : os.path.join(dataset_path, "patient_" + str(patient_id), "EyeGaze", "gaze.csv" )
+
+	# reflacx ellipse annotations
+	REFLACX_ELLIPSE_PATH = lambda dataset_path, patient_id : os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", "ellipse_annotations.csv" )
 	
 	# main path where MIMIC-EYE's state will be saved
 	CACHE_PATH = os.path.join(".", "cache", "mimic_eye_state.pkl")
@@ -40,11 +49,11 @@ class Constants():
 	CACHE = {
 						"REFLACX" : 0,							# counts how many patients are in REFLACX dataset
 						"EYE_GAZE" : 0,							# counts how many patients are in EYE GAZE dataset
-						"OVERLAP" : 0,							# counts how many patients overlap REFLACX and EYE GAZE
+						"OVERLAP" : [],							# lists the patient ids that overlap both datasets
 						"PATIENTS" : {},						# dictionary containing all information about a single patient
 						"XRAY_TO_PATIENT" 	: {},		# dictionary mapping an XRayID to a PatientID
 						"XRAY_TO_DIAGNOSIS" : {},		# dictionary mapping an XRayID to a Diagnosis (Eye Gaze only)
-						"XRAY_TO_ABNORMALITY" : {},	# dictionary mapping an XRayID to an Abnormality
+						"XRAY_TO_ABNORMALITY" : {},	# dictionary mapping an XRayID to an Abnormality (REFLACX only)
 	}
 
 	# for display purposes ----------------------------------------------
@@ -63,8 +72,8 @@ class Constants():
     "CARDIAC SILHOUETTE" : "#D98880",
     "LEFT CLAVICLE" : "#AF7AC5",
     "RIGHT CLAVICLE" : "#AF7AC5",
-    "LEFT COSTOPHRENIC ANGLE" : "#5DADE2",
-    "RIGHT COSTOPHRENIC ANGLE" : "#5DADE2",
+    "LEFT COSTOPHRENIC ANGLE" : "#3498DB",
+    "RIGHT COSTOPHRENIC ANGLE" : "#3498DB",
     "LEFT HILAR STRUCTURES" : "#76D7C4",
     "RIGHT HILAR STRUCTURES" : "#76D7C4",
     "LEFT LOWER LUNG ZONE" : "#F4D03F",

@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 
-from mediator.Annotation import Annotation
+from data.groundtruth.Annotation import Annotation
 from Constants import Constants as c
 
 

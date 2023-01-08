@@ -1,31 +1,43 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+import os
 import pydicom
 import pydicom.data
 from pydicom.pixel_data_handlers.util import apply_voi_lut
 
-from mediator.Annotation import Annotation
-
-from data.eyegaze import BoundingBox
+from data.groundtruth.Annotation import Annotation
+from data.groundtruth.BoundingBox import BoundingBox
 
 from Constants import Constants as c
 
 class Xray():
-	def __init__(self, dicom_id : str, study_id : str, report : str, dicom_path : str, jpg_path : str, annotation_lst : list):
+	def __init__(self, dicom_id : str, study_id : str, report : str, dicom_path : str, annotation_lst : list):
   	
 		# The Xray ID corresponds to the DICOM filename
 		self.ID : str = dicom_id
+		# each Xray is part of a study given by the studyID
 		self.study_id : str = study_id
+		# a radiologist must make a final report of the observations in the XRay
+		# this report is from the hospital information system and can be used as a ground truth
 		self.report : str = report
+
+		patient_key = dicom_path.split("patient_")[1].split(os.sep)[0]
+		# each Xray is stored in a DICOM file located in the DICOM_PATH
 		self.dicom_path : str = dicom_path
-		self.jpg_path : str = jpg_path
+		# each Xray is stored in a JPG file located in the JPG_PATH
+		self.jpg_path : str = c.MIMIC_JPG_PATH(c.DATASET_PATH, patient_key,study_id, dicom_id)
+		# getting the dimensions of the Xray image
+		self.dims = self.dicom2array().shape
+
+		# each Xray can have multiple annotations from different radiologists
 		self.annotation_lst : list = annotation_lst
-		img = self.dicom2array()
-		self.dims = img.shape
+
+		# each Xray can have multiple eye gaze fixations from different radio logists
+		self.eyegaze_fixations_path_lst = [c.EYE_GAZE_FIXATIONS_PATH(c.DATASET_PATH, patient_key)]
+		self.eyegaze_raw_path_lst = [c.EYE_GAZE_RAW_PATH(c.DATASET_PATH, patient_key)]
 
 	def dicom2array(self, voi_lut=True, fix_monochrome=True):
-		
 		# Use the pydicom library to read the dicom file
 		dicom = pydicom.dcmread(self.dicom_path)
 		
@@ -47,16 +59,19 @@ class Xray():
 		data = (data * 255).astype(np.uint8)
 		return data
 
+	# displays a DICOM Xray
 	def show_dicom_xray(self):
 		data = self.dicom2array()
 		plt.imshow(data, cmap=plt.cm.bone)
 		plt.show()
 
+	# displays a JPG Xray
 	def show_jpg_xray(self):
 		data = plt.imread(self.jpg_path)
 		plt.imshow(data, cmap=plt.cm.bone)
 		plt.show()
 
+	# displays a DICOM Xray with the annotations
 	def plot_annotations(self, label = False, figsize=(15, 20), fontsize=16):
   		
 		# set figure size
@@ -94,12 +109,6 @@ class Xray():
 	def getReport(self):
 		return self.report
 
-	def setPath(self, path : str):
-		self.path = path
-
-	def getPath(self):
-		return self.path
-
 	def getID(self):
 		return self.ID
 
@@ -111,3 +120,10 @@ class Xray():
 
 	def getJPGPath(self):
 		return self.jpg_path
+	
+	def getEyegazeFixationsPath(self):
+		return self.eyegaze_fixations_path
+
+	def getEyegazeRawPath(self):
+		return self.eyegaze_raw_path
+

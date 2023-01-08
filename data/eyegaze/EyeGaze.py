@@ -15,6 +15,10 @@ class EyeGaze():
     super().__init__(df)
 
 
+  def clean_data(self):
+    """Cleans the data"""
+    pass
+
   
 
   def get_gaze_data(self):

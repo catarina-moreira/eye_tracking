@@ -1,30 +1,37 @@
 class Patient():
     	
-	def __init__(self, ID, gender, language, marital_status, race, anchor_age, anchor_year, date_of_death, anchor_year_group,admission_dict , xray_study_dict):
+	def __init__(self, ID, gender, language, marital_status, race, anchor_age, anchor_year, date_of_death, anchor_year_group, admission_dict , xray_lst):
 		"""Patient function """
 		# It is a unique identifier which specifies an individual patient
 		self.ID : str = ID
 		# It is the genotypical sex of the patient
 		self.gender : str = gender
-		# 
+		# the language of the patient
 		self.language : str = language
-		# 
+		# the last recorded marital status of the patient
 		self.marital_status : str = marital_status
-		# 
+		#	The race of the patient
 		self.race : str = race
 		# It is the patient's age in the anchor_year.
 		# If a patient's anchor_age is over 89 in the anchor_year then their anchor_age is set to 91, regardless of how old they actually were.
 		self.anchor_age : int = anchor_age
 		# It is a shifted year for the patient
 		self.anchor_year : int = anchor_year
-		# 
+		# It is the date of death of the patient
 		self.date_of_death : str = date_of_death
 		# It is a range of years - the patient's anchor_year occurred during this range."
 		self.anchor_year_group : str = anchor_year_group
 		# a dictionary indicating the multiple admissions of the patient to the hospital
 		self.admission_dict : dict = admission_dict
-		# 
-		self.xray_study_dict : dict = xray_study_dict
+		# a dictionary indicating the multiple xray images of the patient
+		self.xray_lst : list = xray_lst
+
+
+	# Methods -------------------------------------------------------
+	def add_xray_lst(self, xray_lst):
+		"""add_xray_lst function"""
+		self.xray_lst.append(xray_lst)
+
 
 
  # Getters and Setters --------------------------------------------
@@ -104,11 +111,11 @@ class Patient():
 		"""getAdmission_dict function"""
 		return self.admission_dict
 
-	def setXray_study_dict(self, xray_study_dict : dict):
+	def setXray_lst(self, new_xray_lst : list):
 		"""setXray_study_dict function"""
-		self.xray_study_dict = xray_study_dict
+		self.xray_dict = new_xray_lst
 
-	def getXray_study_dict(self):
+	def getXray_lst(self):
 		"""getXray_study_dict function"""
-		return self.xray_study_dict
+		return self.xray_lst
 	
