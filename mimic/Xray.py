@@ -39,9 +39,12 @@ class Xray():
 		# each Xray can have multiple annotations from different radiologists
 		self.annotation_lst : list = annotation_lst
 
-		# each Xray can have multiple eye gaze fixations from different radio logists
+		# each Xray can have multiple fixations from different radiologists
 		self.eyegaze_fixations_path_lst = [c.EYE_GAZE_FIXATIONS_PATH(c.DATASET_PATH, patient_key)]
 		self.eyegaze_raw_path_lst = [c.EYE_GAZE_RAW_PATH(c.DATASET_PATH, patient_key)]
+
+		self.reflacx_fixations_path_lst = []
+		self.reflacx_raw_path_lst = []
 
 	def dicom2array(self, voi_lut=True, fix_monochrome=True):
 		# Use the pydicom library to read the dicom file
@@ -127,9 +130,26 @@ class Xray():
 	def getJPGPath(self):
 		return self.jpg_path
 	
-	def getEyegazeFixationsPath(self):
-		return self.eyegaze_fixations_path
+	def getEyegazeFixationsPathList(self):
+		return self.eyegaze_fixations_path_lst
 
-	def getEyegazeRawPath(self):
-		return self.eyegaze_raw_path
+	def getEyegazeRawPathList(self):
+		return self.eyegaze_raw_path_lst
 
+	def getREFLACXFixationsPathList(self):
+		return self.reflacx_fixations_path_lst
+
+	def getREFLACXRawPathList(self):
+		return self.reflacx_raw_path_lst
+
+	def setEyegazeFixationsPathList(self, new_path):
+		self.eyegaze_fixations_path_lst = new_path
+
+	def setEyegazeRawPathList(self, new_path):
+		self.eyegaze_raw_path_lst = new_path
+
+	def setREFLACXFixationsPathList(self, new_path):
+		self.reflacx_fixations_path_lst = new_path
+
+	def setREFLACXRawPathList(self, new_path):
+		self.reflacx_raw_path_lst = new_path

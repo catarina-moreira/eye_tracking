@@ -8,6 +8,7 @@ class Constants():
 	# only change this path!
 	# main path where the dataset is stored
 	DATASET_PATH = os.path.join("/", "Volumes", "SD_DISK", "XAMI-MIMICv2.0", "")
+	REFLACX_SOURCE = os.path.join("/", "Volumes", "SD_DISK", "REFLACX", "")
 
 	# patient main path
 	PATIENT_PATH = lambda dataset_path, patient_id: os.path.join(dataset_path, "patient_" + str(patient_id))
@@ -40,7 +41,11 @@ class Constants():
 	EYE_GAZE_RAW_PATH = lambda dataset_path, patient_id : os.path.join(dataset_path, "patient_" + str(patient_id), "EyeGaze", "gaze.csv" )
 
 	# reflacx ellipse annotations
-	REFLACX_ELLIPSE_PATH = lambda dataset_path, patient_id : os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", "ellipse_annotations.csv" )
+	REFLACX_ELLIPSE_PATH = lambda dataset_path, patient_id, reflacx_id: os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", reflacx_id, "ellipse_annotations.csv" )
+	REFLACX_FIXATIONS_PATH = lambda dataset_path, patient_id, reflacx_id : os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", reflacx_id, "fixations.csv" )
+	REFLACX_RAW_PATH = lambda dataset_path, patient_id, reflacx_id : os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", reflacx_id, "gaze.csv" )
+	REFLACX_FIXATIONS_SOURCE_PATH = lambda reflacx_path, reflacx_id : os.path.join(reflacx_path, "main_data", reflacx_id, "fixations.csv" )
+	REFLACX_GAZE_SOURCE_PATH = lambda reflacx_path, reflacx_id : os.path.join(reflacx_path, "gaze_data", reflacx_id, "gaze.csv" )
 	
 	# main path where MIMIC-EYE's state will be saved
 	CACHE_PATH = os.path.join(".", "cache", "mimic_eye_state.pkl")
