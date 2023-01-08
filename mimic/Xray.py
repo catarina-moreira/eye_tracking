@@ -12,7 +12,7 @@ from data.groundtruth.BoundingBox import BoundingBox
 from Constants import Constants as c
 
 class Xray():
-	def __init__(self, dicom_id : str, study_id : str, report : str, dicom_path : str, annotation_lst : list):
+	def __init__(self, dicom_id : str, study_id : str, report : str, diagnosis :str, dicom_path : str, annotation_lst : list):
   	
 		# The Xray ID corresponds to the DICOM filename
 		self.ID : str = dicom_id
@@ -21,6 +21,8 @@ class Xray():
 		# a radiologist must make a final report of the observations in the XRay
 		# this report is from the hospital information system and can be used as a ground truth
 		self.report : str = report
+		# the diagnosis of the Xray
+		self.diagnosis : str = diagnosis
 
 		patient_key = dicom_path.split("patient_")[1].split(os.sep)[0]
 		# each Xray is stored in a DICOM file located in the DICOM_PATH
