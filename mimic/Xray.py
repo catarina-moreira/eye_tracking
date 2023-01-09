@@ -12,7 +12,7 @@ from data.groundtruth.BoundingBox import BoundingBox
 from Constants import Constants as c
 
 class Xray():
-	def __init__(self, dicom_id : str, study_id : str, report : str, diagnosis :str, dicom_path : str, annotation_lst : list):
+	def __init__(self, dicom_id : str, study_id : str, report : str, diagnosis :str, dicom_path : str):
   	
 		# The Xray ID corresponds to the DICOM filename
 		self.ID : str = dicom_id
@@ -25,6 +25,7 @@ class Xray():
 		self.diagnosis : str = diagnosis
 
 		patient_key = dicom_path.split("patient_")[1].split(os.sep)[0]
+
 		# each Xray is stored in a DICOM file located in the DICOM_PATH
 		self.dicom_path : str = dicom_path
 		# each Xray is stored in a JPG file located in the JPG_PATH
@@ -36,15 +37,34 @@ class Xray():
 			print(f"[WARNING] Patient {patient_key} does not contain DICOM file {self.dicom_path}")
 			self.dims = (0,0)
 
-		# each Xray can have multiple annotations from different radiologists
-		self.annotation_lst : list = annotation_lst
+		# each Xray has multiple Xray annotations of anatomical structures of the thorax (eye gaze only)
+		self.bbox_lst : list = []
 
 		# each Xray can have multiple fixations from different radiologists
-		self.eyegaze_fixations_path_lst = [c.EYE_GAZE_FIXATIONS_PATH(c.DATASET_PATH, patient_key)]
-		self.eyegaze_raw_path_lst = [c.EYE_GAZE_RAW_PATH(c.DATASET_PATH, patient_key)]
+		# c.EYE_GAZE_FIXATIONS_PATH(c.DATASET_PATH, patient_key)
+		# c.EYE_GAZE_RAW_PATH(c.DATASET_PATH, patient_key)
+		self.fixations_dict = {}
+		self.gaze_dict = {}
 
-		self.reflacx_fixations_path_lst = []
-		self.reflacx_raw_path_lst = []
+		# each Xray may contain several annotations of lesions
+		self.abnormality_dict : dict = {}
+
+
+
+	def getInfo(self):
+		cxr_dict = {}
+		cxr_dict["ID"] = self.ID
+		cxr_dict["study_id"] = self.study_id
+		cxr_dict["report"] = self.report
+		cxr_dict["diagnosis"] = self.diagnosis
+		cxr_dict["dicom_path"] = self.dicom_path
+		cxr_dict["jpg_path"] = self.jpg_path
+		cxr_dict["dims"] = self.dims
+		cxr_dict["bbox_lst"] = self.bbox_lst
+		cxr_dict["abnormality_dict"] = self.abnormality_dict
+		cxr_dict["fixations_dict"] = self.fixations_dict
+		cxr_dict["gaze_dict"] = self.gaze_dict
+		return cxr_dict
 
 	def dicom2array(self, voi_lut=True, fix_monochrome=True):
 		# Use the pydicom library to read the dicom file
@@ -109,47 +129,75 @@ class Xray():
 	def show_report(self):
 		print(self.report)
 
+
+	# getters and setters ----------------------------------------------
+	def getReport(self):
+		return self.report
+
 	def setReport(self, report : str):
 		self.report = report
 
 	def getDimensions(self):
 		return self.dims
-
-	def getReport(self):
-		return self.report
+	
+	def setDimensions(self, new_dims):
+		self.dims = new_dims
 
 	def getID(self):
 		return self.ID
 
+	def setID(self, new_id):
+		self.ID = new_id
+
 	def getStudyID(self):
 		return self.study_id
+
+	def setStudyID(self, new_study_id):
+		self.study_id = new_study_id
 
 	def getDICOMPath(self):
 		return self.dicom_path
 
+	def setDICOMPath(self, new_dicom_path):
+		self.dicom_path = new_dicom_path
+
 	def getJPGPath(self):
 		return self.jpg_path
 	
-	def getEyegazeFixationsPathList(self):
-		return self.eyegaze_fixations_path_lst
+	def setJPGPath(self, new_jpg_path):
+		self.jpg_path = new_jpg_path
 
-	def getEyegazeRawPathList(self):
-		return self.eyegaze_raw_path_lst
+	def getDiagnosis(self):
+		return self.diagnosis
 
-	def getREFLACXFixationsPathList(self):
-		return self.reflacx_fixations_path_lst
+	def setDiagnosis(self, new_diagnosis):
+		self.diagnosis = new_diagnosis
 
-	def getREFLACXRawPathList(self):
-		return self.reflacx_raw_path_lst
+	def getAbnormalityDict(self):
+		return self.abnormality_dict
 
-	def setEyegazeFixationsPathList(self, new_path):
-		self.eyegaze_fixations_path_lst = new_path
+	def setAbnormalityDict(self, new_abnormality_dict : dict):
+		self.abnormality_dict = new_abnormality_dict
 
-	def setEyegazeRawPathList(self, new_path):
-		self.eyegaze_raw_path_lst = new_path
+	def getBboxList(self):
+		return self.bbox_lst
 
-	def setREFLACXFixationsPathList(self, new_path):
-		self.reflacx_fixations_path_lst = new_path
+	def setBboxList(self, new_bbox_lst):
+		self.bbox_lst = new_bbox_lst
 
-	def setREFLACXRawPathList(self, new_path):
-		self.reflacx_raw_path_lst = new_path
+	def getFixationsDict(self):
+		return self.fixations_dict
+	
+	def setFixationsDict(self, new_fixations_dict : dict):
+		self.fixations_dict = new_fixations_dict
+	
+	def getGazeDict(self):
+		return self.gaze_dict
+
+	def setGazeDict(self, new_gaze_dict : dict):
+		self.gaze_dict = new_gaze_dict
+
+
+	
+
+

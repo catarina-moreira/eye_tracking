@@ -41,11 +41,12 @@ class Constants():
 	EYE_GAZE_RAW_PATH = lambda dataset_path, patient_id : os.path.join(dataset_path, "patient_" + str(patient_id), "EyeGaze", "gaze.csv" )
 
 	# reflacx ellipse annotations
-	REFLACX_ELLIPSE_PATH = lambda dataset_path, patient_id, reflacx_id: os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", reflacx_id, "ellipse_annotations.csv" )
+	REFLACX_ELLIPSE_PATH = lambda dataset_path, patient_id, reflacx_id: os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", reflacx_id, "anomaly_location_ellipses.csv" )
 	REFLACX_FIXATIONS_PATH = lambda dataset_path, patient_id, reflacx_id : os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", reflacx_id, "fixations.csv" )
 	REFLACX_RAW_PATH = lambda dataset_path, patient_id, reflacx_id : os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", reflacx_id, "gaze.csv" )
 	REFLACX_FIXATIONS_SOURCE_PATH = lambda reflacx_path, reflacx_id : os.path.join(reflacx_path, "main_data", reflacx_id, "fixations.csv" )
 	REFLACX_GAZE_SOURCE_PATH = lambda reflacx_path, reflacx_id : os.path.join(reflacx_path, "gaze_data", reflacx_id, "gaze.csv" )
+	REFLACX_METADATA = lambda dataset_path, patient_id : os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", "metadata.csv" )
 	
 	# main path where MIMIC-EYE's state will be saved
 	CACHE_PATH = os.path.join(".", "cache", "mimic_eye_state.pkl")
@@ -57,10 +58,7 @@ class Constants():
 						"OVERLAP" : [],							# lists the patient ids that overlap both datasets
 						"PATIENTS" : {},						# dictionary containing all information about a single patient
 						"XRAY_TO_PATIENT" 	: {},		# dictionary mapping an XRayID to a PatientID
-						"XRAY_TO_FIXATIONS" : {},		# dictionary mapping an XRayID to a list of Fixation files
-						"XRAY_TO_GAZE" : {},			  # dictionary mapping an XRayID to a list of Gaze files
 						"XRAY_TO_DIAGNOSIS" : {},		# dictionary mapping an XRayID to a Diagnosis (Eye Gaze only)
-						"XRAY_TO_ABNORMALITY" : {},	# dictionary mapping an XRayID to an Abnormality (REFLACX only)
 	}
 
 	# for display purposes ----------------------------------------------
