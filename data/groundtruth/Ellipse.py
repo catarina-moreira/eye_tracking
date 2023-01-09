@@ -36,7 +36,7 @@ class Ellipse(Annotation):
   def plot_shape(self, ax : plt.axes, label : bool = False, fontsize : int = 10):
     super().plot_shape(ax, label, fontsize)
     t = np.linspace(0, 2 * np.pi, 100)
-    ax.plot(self.center_x + self.a * np.cos(t), self.center_y + self.b * np.sin(t))
+    ax.plot(self.center_x + self.a * np.cos(t), self.center_y + self.b * np.sin(t), color = c.COLOR_MAP[self.label.upper()], linewidth = 2)
     if label:
       ax.text((self.xmin + self.xmax) / 2, (self.ymin - 50), self.label, ha='center', va='center', c = c.COLOR_MAP[self.label.upper()], fontsize = fontsize)
     return ax
@@ -48,6 +48,6 @@ class Ellipse(Annotation):
     ax = plt.axes()
     t = np.linspace(0, 2 * np.pi, 100)
     ax.plot(self.center_x + self.a * np.cos(t), self.center_y + self.b * np.sin(t))
-    ax.plot(x, y, 'ro')
+    ax.plot(x, y, c = c.COLOR_MAP[self.label.upper()] )
     plt.tight_layout()
     plt.show() 

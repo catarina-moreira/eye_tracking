@@ -75,6 +75,7 @@ class Constants():
 
 	COLOR_MAP = {
     "CARDIAC SILHOUETTE" 			: "#D98880",
+		"ENLARGED CARDIAC SILHOUETTE" : "#D98880",
     "LEFT CLAVICLE" 					: "#AF7AC5",
     "RIGHT CLAVICLE" 					: "#AF7AC5",
     "LEFT COSTOPHRENIC ANGLE" : "#3498DB",

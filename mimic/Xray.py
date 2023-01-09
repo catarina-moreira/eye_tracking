@@ -119,7 +119,7 @@ class Xray():
 		ax.invert_yaxis()
 
 		# for each annotation in the annotation list, plot it over the xray
-		for annotation in self.annotation_lst:
+		for annotation in self.bbox_lst:
 			ax = annotation.plot_shape(ax, label, fontsize)
 
 		# show the plot

@@ -43,3 +43,21 @@ def read_CXR_report(patient_key : str, study_id : str):
               break
           report += line.strip()+"\n"
   return report
+
+# check which column ("Normal", "CHF" or "Pneumonia") has a 1 in the eye_gaze_df dataframe
+def get_diagnosis(row):
+    diagnosis = "Normal"
+    if row.CHF == 1:
+        diagnosis = "CHF"
+    if row.pneumonia == 1:
+        diagnosis = "Pneumonia"
+    return diagnosis
+
+def getLabelsFromREFLACX(df, abnormalities):
+  
+  abnormalities_lst = []
+  for abn in range(0,len(abnormalities)):
+    if str(df[abn]) == "True":
+      abnormalities_lst.append(abnormalities[abn])
+  return abnormalities_lst
+
