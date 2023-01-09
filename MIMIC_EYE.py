@@ -114,6 +114,7 @@ class MIMIC_EYE():
 					xray_dicom_path = c.MIMIC_DICOM_PATH(c.DATASET_PATH, patient_key, study_id, xray_id)
 				
 					fixations_dict = {}
+					transcripts_dict = {}
 					gaze_dict = {}
 					ell_annotation_dict = {}
 					bbox_lst = []
@@ -127,6 +128,7 @@ class MIMIC_EYE():
 					
 					fixations_dict[study_id + "_" + xray_id] = c.EYE_GAZE_FIXATIONS_PATH(c.DATASET_PATH, patient_key)
 					gaze_dict[study_id + "_" + xray_id] = c.EYE_GAZE_RAW_PATH(c.DATASET_PATH, patient_key)
+					transcripts_dict[study_id + "_" + xray_id] = c.EYE_GAZE_TRANSCRIPTS_PATH(c.DATASET_PATH, patient_key, xray_id)
 
 					if "REFLACX" in patient_dirs:
 
@@ -139,7 +141,7 @@ class MIMIC_EYE():
 			
 						ell_annotation_dict = cxr.getAbnormalityDict()
 						for ref in ref_row.itertuples():
-							refl_id = ref_row["id"].values[0]
+							refl_id = ref["id"].values[0]
 							
 							temp = []
 							if refl_id in ell_annotation_dict.keys():
@@ -153,6 +155,8 @@ class MIMIC_EYE():
 							ell_annotation_dict[refl_id] = temp
 							fixations_dict[refl_id + "_" + xray_id] = c.REFLACX_FIXATIONS_PATH(c.DATASET_PATH, patient_key, refl_id)
 							gaze_dict[refl_id + "_" + xray_id] = c.REFLACX_RAW_PATH(c.DATASET_PATH, patient_key, refl_id)
+							transcripts_dict[refl_id + "_" + xray_id] = c.REFLACX_TRANSCRIPTS_PATH(c.DATASET_PATH, patient_key, refl_id)
+
 						
 							cxr.setAbnormalityDict(ell_annotation_dict)
 
@@ -167,6 +171,7 @@ class MIMIC_EYE():
 						
 					cxr.setFixationsDict(fixations_dict)
 					cxr.setGazeDict(gaze_dict)
+					cxr.setAudioTranscriptsDict(transcripts_dict)
 					
 
 					xray_lst.append( cxr )

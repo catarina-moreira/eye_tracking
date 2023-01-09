@@ -41,15 +41,14 @@ class Xray():
 		self.bbox_lst : list = []
 
 		# each Xray can have multiple fixations from different radiologists
-		# c.EYE_GAZE_FIXATIONS_PATH(c.DATASET_PATH, patient_key)
-		# c.EYE_GAZE_RAW_PATH(c.DATASET_PATH, patient_key)
 		self.fixations_dict = {}
 		self.gaze_dict = {}
 
+		# each Xray may contain audio transcripts from different radiologists
+		self.audio_transcripts_dict = {}
+
 		# each Xray may contain several annotations of lesions
 		self.abnormality_dict : dict = {}
-
-
 
 	def getInfo(self):
 		cxr_dict = {}
@@ -64,29 +63,31 @@ class Xray():
 		cxr_dict["abnormality_dict"] = self.abnormality_dict
 		cxr_dict["fixations_dict"] = self.fixations_dict
 		cxr_dict["gaze_dict"] = self.gaze_dict
+		cxr_dict["audio_transcripts_dict"] = self.audio_transcripts_dict
 		return cxr_dict
 
+	def normalize_image(self, data):
+		data = data - np.min(data)
+		data = data / np.max(data)
+		data = (data * 255).astype(np.uint8)
+		return data
+  
+	# converts a DICOM Xray to a numpy array
 	def dicom2array(self, voi_lut=True, fix_monochrome=True):
 		# Use the pydicom library to read the dicom file
 		dicom = pydicom.dcmread(self.dicom_path)
 		
 		# VOI LUT (if available by DICOM device) is used to 
 		# transform raw DICOM data to "human-friendly" view
-		if voi_lut:
-				data = apply_voi_lut(dicom.pixel_array, dicom)
-		else:
-				data = dicom.pixel_array
-				
+		data =  apply_voi_lut(dicom.pixel_array, dicom) if voi_lut else dicom.pixel_array
+
 		# The XRAY may look inverted
 		#   - If we want to fix this we can
 		if fix_monochrome and dicom.PhotometricInterpretation == "MONOCHROME1":
 				data = np.amax(data) - data
 		
 		# Normalize the image array and return
-		data = data - np.min(data)
-		data = data / np.max(data)
-		data = (data * 255).astype(np.uint8)
-		return data
+		return self.normalize_image(data)
 
 	# displays a DICOM Xray
 	def show_dicom_xray(self):
@@ -101,11 +102,10 @@ class Xray():
 		plt.show()
 
 	# displays a DICOM Xray with the annotations
-	def plot_annotations(self, label = False, figsize=(15, 20), fontsize=16):
+	def plot_bounding_boxess(self, annotation_labels = None, label = False, figsize=(15, 20), fontsize=16, linewidth=2):
   		
 		# set figure size
-		plt.figure(figsize=(figsize))
-		ax = plt.axes()
+		fig , ax = plt.Figure(figsize=(figsize))
 
 		# plot xray image
 		img = plt.imread( self.jpg_path )
@@ -120,8 +120,14 @@ class Xray():
 
 		# for each annotation in the annotation list, plot it over the xray
 		for annotation in self.bbox_lst:
-			ax = annotation.plot_shape(ax, label, fontsize)
-
+			# if no specific labels are given, plot all annotations
+			if not annotation_labels:	
+					ax = annotation.plot_shape(ax, label, fontsize, linewidth)
+			else:
+				# if specific labels are given, plot only those annotations
+				if annotation.label in annotation_labels:
+					ax = annotation.plot_shape(ax, label, fontsize, linewidth)
+  				
 		# show the plot
 		plt.tight_layout()
 		plt.show()
@@ -196,6 +202,15 @@ class Xray():
 
 	def setGazeDict(self, new_gaze_dict : dict):
 		self.gaze_dict = new_gaze_dict
+	
+	def getAudioTranscriptsDict(self):
+		return self.audio_transcripts_dict		
+	
+	def setAudioTranscriptsDict(self, new_audio_transcripts_dict : dict):
+		self.audio_transcripts_dict = new_audio_transcripts_dict
+
+	
+	
 
 
 	

@@ -40,6 +40,13 @@ class Constants():
 	EYE_GAZE_FIXATIONS_PATH = lambda dataset_path, patient_id : os.path.join(dataset_path, "patient_" + str(patient_id), "EyeGaze", "fixations.csv" )
 	EYE_GAZE_RAW_PATH = lambda dataset_path, patient_id : os.path.join(dataset_path, "patient_" + str(patient_id), "EyeGaze", "gaze.csv" )
 
+	# eye gaze transcripts
+	EYE_GAZE_TRANSCRIPTS_PATH = lambda dataset_path, patient_id, dicom_id : os.path.join(dataset_path, "patient_" + str(patient_id), "EyeGaze", "audio_segmentation_transcripts", dicom_id, "transcript.json" )
+	
+	# eye gaze segmentations
+	SEGMENTATION_LIST = ["aortic_knob", "left_lung", "mediastanum", 'right_lung']
+	EYE_GAZE_SEGMENTATION_PATH = lambda dataset_path, patient_id, dicom_id, segmentation : os.path.join(dataset_path, "patient_" + str(patient_id), "EyeGaze", "audio_segmentation_transcripts", dicom_id, segmentation + ".png" )
+
 	# reflacx ellipse annotations
 	REFLACX_ELLIPSE_PATH = lambda dataset_path, patient_id, reflacx_id: os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", reflacx_id, "anomaly_location_ellipses.csv" )
 	REFLACX_FIXATIONS_PATH = lambda dataset_path, patient_id, reflacx_id : os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", reflacx_id, "fixations.csv" )
@@ -47,7 +54,14 @@ class Constants():
 	REFLACX_FIXATIONS_SOURCE_PATH = lambda reflacx_path, reflacx_id : os.path.join(reflacx_path, "main_data", reflacx_id, "fixations.csv" )
 	REFLACX_GAZE_SOURCE_PATH = lambda reflacx_path, reflacx_id : os.path.join(reflacx_path, "gaze_data", reflacx_id, "gaze.csv" )
 	REFLACX_METADATA = lambda dataset_path, patient_id : os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", "metadata.csv" )
-	
+
+	# reflacx transcripts
+	REFLACX_TRANSCRIPTS_PATH = lambda dataset_path, patient_id, reflacx_id : os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", reflacx_id, "timestamps_transcription.csv" )
+
+	# reflacx chest annotation
+	REFLACX_CHEST_ANNOTATION_PATH = lambda dataset_path, patient_id, reflacx_id : os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", reflacx_id, "chest_bounding_box.csv" )
+
+
 	# main path where MIMIC-EYE's state will be saved
 	CACHE_PATH = os.path.join(".", "cache", "mimic_eye_state.pkl")
 	

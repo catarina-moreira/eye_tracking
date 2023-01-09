@@ -7,38 +7,24 @@ from analytics.GazeAnalyzer import GazeAnalyzer
 
 class GazeIntegrator(GazeAnalyzer):
 
-  def __init__(self, df : pd.DataFrame):
-    """Initialises the GazeIntegrator class. 
+  def __init__(self, eyegaze : EyeGaze = None, reflacx : REFLACX = None):
+    """Initialises the GazeIntegrator class.
     Args:
-      df (pd.DataFrame): A pandas dataframe containing the gaze data.
-          It must have the following columns:
-          - timestamp (float): The timestamp of the gaze data
-          - x (float): The x coordinate of the gaze data
-          - y (float): The y coordinate of the gaze data
-          - pupil_diameter (float): The pupil diameter of the gaze data"""
-    super().__init__(df)
+      eyegaze (EyeGaze): An instance of the EyeGaze class
+      reflacx (REFLACX): An instance of the REFLACX class"""
+    super().__init__
+    
+    self.eyegaze = eyegaze
+    self.reflacx = reflacx
 
-  
-  def loadRawGaze():
-    """Loads the raw gaze data"""
+  def standardiseEyeGaze(self):
+    """Integrates the gaze data"""
     pass
 
-  def loadFixations():
-    """Loads the fixations"""
+  def standardiseReflacx(self):
+    """Integrates the gaze data"""
+  pass
+
+  def get_integrated_data(self):
+    """Returns the integrated data"""
     pass
-
-
-
-
-
-
-
-  def get_gaze_data(self):
-    """Returns the gaze data"""
-    return self.df
-
-
-
-
-
-
