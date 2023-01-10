@@ -141,7 +141,8 @@ class MIMIC_EYE():
 			
 						ell_annotation_dict = cxr.getAbnormalityDict()
 						for ref in ref_row.itertuples():
-							refl_id = ref["id"].values[0]
+						
+							refl_id = ref.id
 							
 							temp = []
 							if refl_id in ell_annotation_dict.keys():
