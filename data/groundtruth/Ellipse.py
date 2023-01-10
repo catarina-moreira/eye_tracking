@@ -33,10 +33,10 @@ class Ellipse(Annotation):
     super().is_point_inside_shape(x,y)
     return (x - self.center_x) ** 2 / self.a ** 2 + (y - self.center_y) ** 2 / self.b ** 2 <= 1
 
-  def plot_shape(self, ax : plt.axes, label : bool = False, fontsize : int = 10):
-    super().plot_shape(ax, label, fontsize)
+  def plot_shape(self, ax : plt.axes, label : bool = False, fontsize : int = 14, linewidth : int = 2):
+    super().plot_shape(ax, label, fontsize, linewidth)
     t = np.linspace(0, 2 * np.pi, 100)
-    ax.plot(self.center_x + self.a * np.cos(t), self.center_y + self.b * np.sin(t), color = c.COLOR_MAP[self.label.upper()], linewidth = 2)
+    ax.plot(self.center_x + self.a * np.cos(t), self.center_y + self.b * np.sin(t), color = c.COLOR_MAP[self.label.upper()], linewidth = linewidth)
     if label:
       ax.text((self.xmin + self.xmax) / 2, (self.ymin - 50), self.label, ha='center', va='center', c = c.COLOR_MAP[self.label.upper()], fontsize = fontsize)
     return ax

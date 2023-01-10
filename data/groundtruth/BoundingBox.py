@@ -34,13 +34,13 @@ class BoundingBox(Annotation):
     """returns a Boolean that checks whether a point (x,y) sits inside a bounding box"""
     return self.xmin <= x <= self.xmax and self.ymin <= y <= self.ymax
 
-  def plot_shape(self, ax : plt.axes, label : bool = False, fontsize : int = 10):
+  def plot_shape(self, ax : plt.axes, label : bool = False, fontsize : int = 14, linewidth : int = 2):
     """plots a bounding box in a given plt axes"""
-    super().plot_shape(ax, label, fontsize)
+    super().plot_shape(ax, label, fontsize, linewidth)
     ax.plot([self.xmin, self.xmax, self.xmax, self.xmin, self.xmin], \
-             [self.ymin, self.ymin, self.ymax, self.ymax, self.ymin], c = c.COLOR_MAP[self.label.upper()])
+             [self.ymin, self.ymin, self.ymax, self.ymax, self.ymin], c = c.COLOR_MAP[self.label.upper()], linewidth=linewidth)
     if label:
-      ax.text(self.xmin, self.ymin - 10, self.label, ha='center', va='center', c = c.COLOR_MAP[self.label.upper()], fontsize = fontsize)
+      ax.text(self.xmin+200, self.ymin -25, self.label, ha='center', va='center', c = c.COLOR_MAP[self.label.upper()], fontsize = fontsize)
     return ax
     
   def plot_shape_and_point(self, x : float, y : float, xray_path = None):

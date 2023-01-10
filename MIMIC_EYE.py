@@ -62,6 +62,7 @@ class MIMIC_EYE():
 		with open(c.CACHE_PATH, 'rb') as pickle_file:
 			c.CACHE = pkl.load(pickle_file)
 
+	
 	def initialize_mimic_eye(self):
 		"""initialize_mimic_eye function """
 		PATIENTS_DIC = {}

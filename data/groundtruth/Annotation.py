@@ -44,7 +44,7 @@ class Annotation(ABC):
     pass
 
   @abstractmethod
-  def plot_shape(self, ax : plt.axes, label : bool = False, fontsize : int = 10):
+  def plot_shape(self, ax : plt.axes, label : bool = False, fontsize : int = 14, linewidth : int = 2):
     pass
 
   def getCoordinates(self):

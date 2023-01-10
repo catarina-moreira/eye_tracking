@@ -106,4 +106,7 @@ class Constants():
     "RIGHT UPPER LUNG ZONE" 	: "#27AE60",
     "TRACHEA" 								: "#F9E79F",
     "UPPER MEDIASTINUM" 			: "#AED6F1",
+		"OTHER" 									: "#F4F6F7",
+		"CONSOLIDATION"						: "#F7DC6F",
+		"PNEUMOTHORAX"						: "#5DADE2",
 }

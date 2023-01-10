@@ -76,13 +76,11 @@ class Xray():
 	def dicom2array(self, voi_lut=True, fix_monochrome=True):
 		# Use the pydicom library to read the dicom file
 		dicom = pydicom.dcmread(self.dicom_path)
-		
-		# VOI LUT (if available by DICOM device) is used to 
-		# transform raw DICOM data to "human-friendly" view
+
+		# VOI LUT (if available by DICOM device) is used to transform raw DICOM data to "human-friendly" view
 		data =  apply_voi_lut(dicom.pixel_array, dicom) if voi_lut else dicom.pixel_array
 
 		# The XRAY may look inverted
-		#   - If we want to fix this we can
 		if fix_monochrome and dicom.PhotometricInterpretation == "MONOCHROME1":
 				data = np.amax(data) - data
 		
@@ -101,15 +99,14 @@ class Xray():
 		plt.imshow(data, cmap=plt.cm.bone)
 		plt.show()
 
-	# displays a DICOM Xray with the annotations
-	def plot_bounding_boxess(self, annotation_labels = None, label = False, figsize=(15, 20), fontsize=16, linewidth=2):
-  		
-		# set figure size
-		fig , ax = plt.Figure(figsize=(figsize))
+	# plots a JPG Xray
+	def xray_figure(self, figsize = (5,7)):
+		plt.figure(figsize=(figsize))
+		ax = plt.axes()
 
 		# plot xray image
 		img = plt.imread( self.jpg_path )
-		ax.imshow(img, cmap=plt.cm.bone) 
+		ax.imshow(img, cmap=plt.cm.bone)
 
 		# set the x and y limits of the plot
 		plt.xlim([0, img.shape[1]])
@@ -117,16 +114,40 @@ class Xray():
 
 		# invert the y axis so that the origin is in the top left
 		ax.invert_yaxis()
+		return ax
+  		
+
+	def plot_abnormalities(self, figsize=(5, 7), label=True, fontsize=10, linewidth=2 ):
+  	
+		# plot the xray image
+		ax = self.xray_figure(figsize = figsize)
+
+		# invert the y axis so that the origin is in the top left
+		readings = self.abnormality_dict.keys()
+		print(readings)
+		print(f"Number of radiologists annotating the image: {len(readings)}")
+		for reading in readings:
+			abnormalities = self.abnormality_dict[reading]
+			for abnormality in abnormalities:
+				abnormality.plot_shape(ax, label=label, fontsize=fontsize, linewidth=linewidth);
+				ax.set_title(f"Radiologist {reading} annotations", fontsize=fontsize)
+
+
+	# displays a DICOM Xray with the annotations
+	def plot_bounding_boxess(self, annotation_labels = None, label = False, figsize=(5, 7), fontsize=16, linewidth=2):
+  	
+		# plot the xray image
+		ax = self.xray_figure(figsize = figsize)
 
 		# for each annotation in the annotation list, plot it over the xray
 		for annotation in self.bbox_lst:
 			# if no specific labels are given, plot all annotations
 			if not annotation_labels:	
-					ax = annotation.plot_shape(ax, label, fontsize, linewidth)
+					ax = annotation.plot_shape(ax, label = label, fontsize=fontsize, linewidth=linewidth)
 			else:
 				# if specific labels are given, plot only those annotations
-				if annotation.label in annotation_labels:
-					ax = annotation.plot_shape(ax, label, fontsize, linewidth)
+				if annotation.label.upper() in annotation_labels:
+					ax = annotation.plot_shape(ax, label = label, fontsize=fontsize)
   				
 		# show the plot
 		plt.tight_layout()
