@@ -8,15 +8,24 @@ import pandas as pd
 # the radiologist’s computer’s monitor resolution (i.e., kept same aspect ratio)
 class EyeGaze():
 
+
+  DESCRIPTION = {
+    "DICOM_ID" : "DICOM_ID from the original MIMIC dataset",
+    "CNT" : "The counter data variable is incremented by 1 for each data record sent by the server. Useful to determine if any data packets are missed by the client",
+    "Time (in secs)" : "The time elapsed in seconds since the last system initialization or callibration. The time stamp is recorded at the end of the transmission of the image from camera to computer. USeful for synchronization and to determine if the server computer is processing the images at the full frame rate, For a 60Hz camera, the TIME value should increment by 1/60 seconds.",
+    "TIMETICK(f=10000000)" : "This is a 64-bit integer which indicates the number of CPU time ticks for high precision synchronization with other dta collected on the same CPU",
+    "FPOGX" : "The X-coordinate of the fixation POG (point of gaze) as a fraction of the screen size. (0,0) is top left, (0.5, 0.5) is the screen center and (1.0, 1.0) is the bottom right",
+    "FPOGY" : "The Y-coordinate of the fixation POG (point of gaze) as a fraction of the screen size. (0,0) is top left, (0.5, 0.5) is the screen center and (1.0, 1.0) is the bottom right",
+    "FPOGS" : "The starting time of the fixation POG in seconds since the system initialitization or calibration",
+    "FPOGD" : "The duration of the fixation POG in seconds",
+    "FPOGID" : "The fixation POG ID. This is a unique ID for each fixation POG. It is incremented by 1 for each new fixation POG",
+    "FPOGV" : "The valid flag with value 1 (TRUE) if the fixation POG data is valid, and 0 (FALSE) if it is not. FPOGV valid is TRUE ONLY when either one, or both, of the eyes are detected AND a fixation is detected. FPOGV is FALSE all other times, for example when the participant blinks, when there is no face in the fiel of view, when the eye move to the next fixation (i.e. a saccade)",
+    "BPOGX" : "The X-coordinate of the blink POG (point of gaze) as a fraction of the screen size.",
+    "BPOGY" : "The Y-coordinate of the blink POG (point of gaze) as a fraction of the screen size.",
+    
+  }
+
   def __init__(self, df : pd.DataFrame):
-    """Initialises the EyeGaze class. 
-    Args:
-      df (pd.DataFrame): A pandas dataframe containing the gaze data.
-          It must have the following columns:
-          - timestamp (float): The timestamp of the gaze data
-          - x (float): The x coordinate of the gaze data
-          - y (float): The y coordinate of the gaze data
-          - pupil_diameter (float): The pupil diameter of the gaze data"""
     self.df = df
 
 
@@ -29,3 +38,4 @@ class EyeGaze():
     """Returns the gaze data"""
     return self.df
 
+ 

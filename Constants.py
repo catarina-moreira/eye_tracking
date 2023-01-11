@@ -71,6 +71,7 @@ class Constants():
 						"EYE_GAZE" : 0,							# counts how many patients are in EYE GAZE dataset
 						"OVERLAP" : [],							# lists the patient ids that overlap both datasets
 						"PATIENTS" : {},						# dictionary containing all information about a single patient
+						"DICOM_TO_XRAY" : {},				# dictionary mapping a DICOMID to an XRay object"
 						"XRAY_TO_PATIENT" 	: {},		# dictionary mapping an XRayID to a PatientID
 						"XRAY_TO_DIAGNOSIS" : {},		# dictionary mapping an XRayID to a Diagnosis (Eye Gaze only)
 	}

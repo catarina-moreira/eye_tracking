@@ -68,6 +68,7 @@ class MIMIC_EYE():
 		PATIENTS_DIC = {}
 		XRAY_TO_PATIENT = {}
 		XRAY_TO_DIAGNOSIS = {}
+		DICOM_TO_XRAY = {}
 
 		eye_gaze_sheet = os.path.join(c.DATASET_PATH, "spreadsheets", 'EyeGaze', "master_sheet_with_updated_stayId.csv")
 		eye_gaze_df = pd.read_csv( eye_gaze_sheet )
@@ -177,6 +178,7 @@ class MIMIC_EYE():
 					
 
 					xray_lst.append( cxr )
+					DICOM_TO_XRAY[xray_id] = cxr
 
 					# get all fixations associated to the current xray
 					# print(mimic_core["patient_id"].tail(1).values[0])
@@ -203,6 +205,7 @@ class MIMIC_EYE():
 		c.CACHE["XRAY_TO_PATIENT"] = XRAY_TO_PATIENT
 		c.CACHE["XRAY_TO_DIAGNOSIS"] = XRAY_TO_DIAGNOSIS
 		c.CACHE["OVERLAP"] = list(set(c.CACHE["OVERLAP"]))
+		c.CACHE["DICOM_TO_XRAY"] = DICOM_TO_XRAY
 
 
 
