@@ -22,7 +22,21 @@ class EyeGaze():
     "FPOGV" : "The valid flag with value 1 (TRUE) if the fixation POG data is valid, and 0 (FALSE) if it is not. FPOGV valid is TRUE ONLY when either one, or both, of the eyes are detected AND a fixation is detected. FPOGV is FALSE all other times, for example when the participant blinks, when there is no face in the fiel of view, when the eye move to the next fixation (i.e. a saccade)",
     "BPOGX" : "The X-coordinate of the blink POG (point of gaze) as a fraction of the screen size.",
     "BPOGY" : "The Y-coordinate of the blink POG (point of gaze) as a fraction of the screen size.",
-    
+    "BPOGV" : "The valid flag with value of 1 if the data is valid, and 0 if it is not",
+    "LPCX"  : "The X-coordinate of the left eye pupil in the camera image as a fraction of the camera image size",
+    "LPCY"  : "The Y-coordinate of the left eye pupil in the camera image as a fraction of the camera image size",
+    "LPD"   : "The diameter of the left eye pupil in pixels",
+    "LPS"   : "The scale factor of the left eye pupil (unitless). Value equals 1 at calibration depth, is less than 1 when user is closer to the eye tracker  and greater than 1 when user is further away",
+    "LPV"   : "The valid flag with value of 1 if the data is valid, and 0 if it is not",
+    "RPCX"  : "The X-coordinate of the right eye pupil in the camera image as a fraction of the camera image size",
+    "RPCY"  : "The Y-coordinate of the right eye pupil in the camera image as a fraction of the camera image size",
+    "RPD"   : "The diameter of the right eye pupil in pixels",
+    "RPS"   : "The scale factor of the right eye pupil (unitless). Value equals 1 at calibration depth, is less than 1 when user is closer to the eye tracker  and greater than 1 when user is further away",
+    "RPV"   : "The valid flag with value of 1 if the data is valid, and 0 if it is not",
+    "BKID"  : "Each blink is assigned a unique ID. This ID is incremented by 1 for each new blink. THE BKID value equals 0 for every record where no blink has been recorded",
+    ""
+
+
   }
 
   def __init__(self, df : pd.DataFrame):
