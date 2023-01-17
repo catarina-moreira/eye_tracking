@@ -1,6 +1,7 @@
 
 import pandas as pd
-
+import os
+from Constants import Constants as c
 
 # The radiologist’s eyes were 28 inches away from the monitor
 # Preparation of images. Preparation of images The 1,083 CXR images were converted from 
@@ -43,20 +44,53 @@ class EyeGaze():
     "SACCADE_MAG" : "The magnitude of the saccade calculated as the distance between each fixation (in pixels)",
     "SACCADE_DIR" : "The direction or angle between each fixation (in degrees from horizontal)",
     "X_ORGINAL" : "The X-coordinate of the fixation in original DICOM image",
-    "Y_ORIGINAL" : "The Y-coordinate of the fixation in original DICOM image"
+    "Y_ORIGINAL" : "The Y-coordinate of the fixation in original DICOM image" 
   }
 
-  def __init__(self, df : pd.DataFrame):
-    self.df = df
-
+  def __init__(self, filepath: str):
+    print("Loading gaze and fixations data from EYE GAZE ...")
+    self.filepath : str = filepath
+    self.df_gaze : pd.DataFrame = pd.read_csv(os.path.join(filepath, "gaze.csv"))
+    self.df_fixations : pd.DataFrame = pd.read_csv(os.path.join(filepath, "fixations.csv"))
+    print("done!\n")
 
   def clean_data(self):
     """Cleans the data"""
+    # delete all gaze data and fixations data that fall outside of the image
+    dicom_id = self.df_gaze["DICOM_ID"].iloc[0]
+    cxr = c.CACHE["DICOM_TO_XRAY"][dicom_id]
+    img_dims = cxr.getDimensions()
+    self.df_gaze = self.df_gaze[ (self.df_gaze["X_ORIGINAL"] >= 0) and (self.df_gaze["Y_ORIGINAL"] >= 0) ]
+    self.df_gaze = self.df_gaze[ (self.df_gaze["X_ORIGINAL"] <= img_dims[0]) and (self.df_gaze["Y_ORIGINAL"] <= img_dims[1]) ]
+
+    self.df_fixations = self.df_fixations[ (self.df_fixations["X_ORIGINAL"] >= 0) and (self.df_fixations["Y_ORIGINAL"] >= 0) ]
+    self.df_gaze = self.df_fixations[ (self.df_fixations["X_ORIGINAL"] <= img_dims[0]) and (self.df_fixations["Y_ORIGINAL"] <= img_dims[1]) ]
+
+
+  def process_time(self):
     pass
 
 
   def get_gaze_data(self):
     """Returns the gaze data"""
-    return self.df
+    return self.df_gaze
 
- 
+  def get_fixations_data(self):
+    """Returns the fixations data"""
+    return self.df_fixations
+
+  def set_gaze_data(self, df: pd.DataFrame):
+    """Sets the gaze data"""
+    self.df_gaze = df
+
+  def set_fixations_data(self, df: pd.DataFrame):
+    """Sets the fixations data"""
+    self.df_fixations = df
+
+  def get_gaze_data_by_time(self, start_time: float, end_time: float):
+    """Returns the gaze data between the start_time and end_time"""
+    return self.df_gaze[ (self.df_gaze["TIME"] >= start_time) and (self.df_gaze["TIME"] <= end_time) ]
+
+  def get_fixations_data_by_time(self, start_time: float, end_time: float):
+    """Returns the fixations data between the start_time and end_time"""
+    return self.df_fixations[ (self.df_fixations["TIME"] >= start_time) and (self.df_fixations["TIME"] <= end_time) ]
