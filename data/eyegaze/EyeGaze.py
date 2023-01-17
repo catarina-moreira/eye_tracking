@@ -1,5 +1,6 @@
 
 import pandas as pd
+import numpy as np
 import os
 from Constants import Constants as c
 
@@ -51,24 +52,43 @@ class EyeGaze():
     print("Loading gaze and fixations data from EYE GAZE ...")
     self.filepath : str = filepath
     self.df_gaze : pd.DataFrame = pd.read_csv(os.path.join(filepath, "gaze.csv"))
+    self.df_gaze = self.process_time(self.df_gaze)
     self.df_fixations : pd.DataFrame = pd.read_csv(os.path.join(filepath, "fixations.csv"))
+    self.df_fixations = self.process_time(self.df_fixations)
     print("done!\n")
 
   def clean_data(self):
     """Cleans the data"""
     # delete all gaze data and fixations data that fall outside of the image
+    self.df_gaze = self.select_positive_coordinates(self.df_gaze)
+    self.df_gaze = self.select_gaze_inside_image(self.df_gaze)
+    
+    self.df_fixations = self.select_positive_coordinates( self.df_fixations)
+    self.df_fixations = self.select_gaze_inside_image(self.df_fixations)
+ 
+
+  def process_time(self, df : pd.DataFrame):
+    vals = df["Time (in secs)"].values
+    df["start_time"] = np.append( [0], vals[:-1]) 
+    df["end_time"] = np.append( [vals[0]], vals[1:])
+    df["duration"] = df["end_time"] - df["start_time"]
+    df[["Time (in secs)","start_time","end_time","duration"]]
+    return df
+
+  def select_positive_coordinates(self, df):
+    return df[ (self.df["X_ORIGINAL"] >= 0) and (self.df["Y_ORIGINAL"] >= 0) ].reset_index(inplace=True)
+  
+  def select_gaze_inside_image(self, df):
     dicom_id = self.df_gaze["DICOM_ID"].iloc[0]
     cxr = c.CACHE["DICOM_TO_XRAY"][dicom_id]
     img_dims = cxr.getDimensions()
-    self.df_gaze = self.df_gaze[ (self.df_gaze["X_ORIGINAL"] >= 0) and (self.df_gaze["Y_ORIGINAL"] >= 0) ]
-    self.df_gaze = self.df_gaze[ (self.df_gaze["X_ORIGINAL"] <= img_dims[0]) and (self.df_gaze["Y_ORIGINAL"] <= img_dims[1]) ]
-
-    self.df_fixations = self.df_fixations[ (self.df_fixations["X_ORIGINAL"] >= 0) and (self.df_fixations["Y_ORIGINAL"] >= 0) ]
-    self.df_gaze = self.df_fixations[ (self.df_fixations["X_ORIGINAL"] <= img_dims[0]) and (self.df_fixations["Y_ORIGINAL"] <= img_dims[1]) ]
+    return df[ (df["X_ORIGINAL"] <= img_dims[0]) and (df["Y_ORIGINAL"] <= img_dims[1]) ].reset_index(inplace=True)
 
 
-  def process_time(self):
-    pass
+
+  
+  
+
 
 
   def get_gaze_data(self):
