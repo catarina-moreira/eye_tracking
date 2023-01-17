@@ -34,9 +34,16 @@ class EyeGaze():
     "RPS"   : "The scale factor of the right eye pupil (unitless). Value equals 1 at calibration depth, is less than 1 when user is closer to the eye tracker  and greater than 1 when user is further away",
     "RPV"   : "The valid flag with value of 1 if the data is valid, and 0 if it is not",
     "BKID"  : "Each blink is assigned a unique ID. This ID is incremented by 1 for each new blink. THE BKID value equals 0 for every record where no blink has been recorded",
-    ""
-
-
+    "BKDUR" : "The duration of the preceeding blink in seconds",
+    "BKPMIN": "The number of blinks in the previous 60 second period of time",
+    "LPMM"  : "The diameter of the left eye pupil in milimeters",
+    "LPMMV" : "The valid flag with value of 1 if the data is valid, and 0 if it is not",
+    "RPMM"  : "The diameter of the right eye pupil in milimeters",
+    "RPMMV" : "The valid flag with value of 1 if the data is valid, and 0 if it is not",
+    "SACCADE_MAG" : "The magnitude of the saccade calculated as the distance between each fixation (in pixels)",
+    "SACCADE_DIR" : "The direction or angle between each fixation (in degrees from horizontal)",
+    "X_ORGINAL" : "The X-coordinate of the fixation in original DICOM image",
+    "Y_ORIGINAL" : "The Y-coordinate of the fixation in original DICOM image"
   }
 
   def __init__(self, df : pd.DataFrame):

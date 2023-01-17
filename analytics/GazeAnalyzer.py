@@ -17,15 +17,16 @@ from Constants import Constants as c
 
 class GazeAnalyzer():
   	
-	def __init__(self):
+	def __init__(self, x : float = None, y : float = None,   ):
 		"""GazeAnalyzer Constructor"""
-		pass
+		self.x : float
 	
 	def draw_raw(self, x : float, y : float, imagefile : str = None, savefilename : str =None):
   
 		# image
 		img = plt.imread( imagefile  )
-		dispsize = img.transpose(1,0).shape
+		#dispsize = img.transpose(1,0).shape
+		dispsize = img.transpose().shape
 
 		fig, ax = self.draw_display(dispsize, imagefile=imagefile)
 
@@ -41,7 +42,7 @@ class GazeAnalyzer():
 
 		return fig
 
-	def draw_raw_no_processing(elf, x : float, y : float, figsize = (10,15), imagefile : str = None, savefilename : str =None):
+	def draw_raw_no_processing(self, x : float, y : float, figsize = (10,15), imagefile : str = None, savefilename : str =None):
   		
 			plt.figure(figsize=figsize)
 			img = plt.imread( imagefile  )
