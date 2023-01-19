@@ -69,6 +69,8 @@ class Constants():
 	CACHE = {
 						"REFLACX" : 0,							# counts how many patients are in REFLACX dataset
 						"EYE_GAZE" : 0,							# counts how many patients are in EYE GAZE dataset
+						"EYE_GAZE_PATIENTS" : [],		# lists the patient ids that are in EYE GAZE dataset
+						"REFLACX_PATIENTS" : [],		# lists the patient ids that are in REFLACX dataset
 						"OVERLAP" : [],							# lists the patient ids that overlap both datasets
 						"PATIENTS" : {},						# dictionary containing all information about a single patient
 						"DICOM_TO_XRAY" : {},				# dictionary mapping a DICOMID to an XRay object"

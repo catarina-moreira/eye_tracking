@@ -95,9 +95,9 @@ class EyeGaze():
     df["start_time"] = np.append( [0], vals[:-1]) 
     df["end_time"] = np.append( [vals[0]], vals[1:])
     df["duration"] = df["end_time"] - df["start_time"]
-    df[["Time (in secs)","start_time","end_time","duration"]]
-    df[["START_TIMESTAMP"]] = datetime.fromtimestamp(df["start_time"].values).strftime("%Y-%m-%d %H:%M:%S.%f")
-    df[["END_TIMESTAMP"]] = datetime.fromtimestamp(df["end_time"].values).strftime("%Y-%m-%d %H:%M:%S.%f")
+
+    df["START_TIMESTAMP"] =[datetime.fromtimestamp(x).strftime("%Y-%m-%d %H:%M:%S.%f") for x in df["start_time"].values]
+    df["END_TIMESTAMP"] =[datetime.fromtimestamp(x).strftime("%Y-%m-%d %H:%M:%S.%f") for x in df["end_time"].values]
     return df
 
   def select_positive_coordinates(self, df):
@@ -177,42 +177,41 @@ class EyeGaze():
     """Returns the total fixation time between the start_time and end_time"""
     return self.df_fixations[ (self.df_fixations["TIME"] >= start_time) and (self.df_fixations["TIME"] <= end_time) ]["Time (in secs)"].max()
 
-  def plot_gaze_duration(self):
+  def plot_gaze_duration(self, bins : int = 50):
     """Plots the gaze duration"""
-    self.df_gaze["duration"].plot( kind="hist", bins=100, title="Gaze Duration" )
+    self.df_gaze["duration"].plot( kind="hist", bins=bins, title="Gaze Duration" )
   
-  def plot_fixation_duration(self):
+  def plot_fixation_duration(self, bins : int = 50):
     """Plots the fixation duration"""
-    self.df_fixations["duration"].plot( kind="hist", bins=100, title="Fixation Duration" )
+    self.df_fixations["duration"].plot( kind="hist", bins = bins, title="Fixation Duration" )
 
-  def plot_gaze_duration_by_time(self, start_time: float, end_time: float):
+  def plot_gaze_duration_by_time(self, start_time: float, end_time: float, bins : int = 50):
     """Plots the gaze duration between the start_time and end_time"""
-    self.df_gaze[ (self.df_gaze["TIME"] >= start_time) and (self.df_gaze["TIME"] <= end_time) ]["duration"].plot( kind="hist", bins=100, title="Gaze Duration" )
+    self.df_gaze[ (self.df_gaze["TIME"] >= start_time) and (self.df_gaze["TIME"] <= end_time) ]["duration"].plot( kind="hist", bins=bins, title="Gaze Duration", xlabel="Duration (in secs)" )
   
-  def plot_fixation_duration_by_time(self, start_time: float, end_time: float):
+  def plot_fixation_duration_by_time(self, start_time: float, end_time: float, bins : int = 50):
     """Plots the fixation duration between the start_time and end_time"""
-    self.df_fixations[ (self.df_fixations["TIME"] >= start_time) and (self.df_fixations["TIME"] <= end_time) ]["duration"].plot( kind="hist", bins=100, title="Fixation Duration" )
+    self.df_fixations[ (self.df_fixations["TIME"] >= start_time) and (self.df_fixations["TIME"] <= end_time) ]["duration"].plot( kind="hist", bins=bins, title="Fixation Duration", xlabel="Duration (in secs)" )
   
-  def plot_gaze(self, start_time: float, end_time: float):
+  def plot_gaze(self):
     """Plots the gaze between the start_time and end_time"""
-    self.df_gaze[ (self.df_gaze["TIME"] >= start_time) and (self.df_gaze["TIME"] <= end_time) ].plot( x="X_ORIGINAL", y="Y_ORIGINAL", kind="scatter", title="Gaze" )
+    self.df_gaze.plot( x="X_ORIGINAL", y="Y_ORIGINAL", kind="scatter", title="Gaze" )
 
-  def plot_fixations(self, start_time: float, end_time: float):
+  def plot_fixations(self):
     """Plots the fixations between the start_time and end_time"""
-    self.df_fixations[ (self.df_fixations["TIME"] >= start_time) and (self.df_fixations["TIME"] <= end_time) ].plot( x="X_ORIGINAL", y="Y_ORIGINAL", kind="scatter", title="Fixations" )
+    self.df_fixations.plot( x="X_ORIGINAL", y="Y_ORIGINAL", kind="scatter", title="Fixations" )
 
-  def plot_gaze_and_fixations(self, start_time: float, end_time: float):
+  def plot_gaze_by_time(self, start_time: float, end_time: float):
+    """Plots the gaze between the start_time and end_time"""
+    self.df_gaze[ (self.df_gaze["TIME"] >= start_time) and (self.df_gaze["TIME"] <= end_time) ].plot( x="X_ORIGINAL", y="Y_ORIGINAL", kind="scatter", title="Gaze", xlabel="x", ylabel="Y" )
+
+  def plot_fixations_by_time(self, start_time: float, end_time: float):
+    """Plots the fixations between the start_time and end_time"""
+    self.df_fixations[ (self.df_fixations["TIME"] >= start_time) and (self.df_fixations["TIME"] <= end_time) ].plot( x="X_ORIGINAL", y="Y_ORIGINAL", kind="scatter", title="Fixations", xlabel="X", ylabel="Y" )
+
+  def plot_gaze_and_fixations(self):
     """Plots the gaze and fixations between the start_time and end_time"""
-    self.df_gaze[ (self.df_gaze["TIME"] >= start_time) and (self.df_gaze["TIME"] <= end_time) ].plot( x="X_ORIGINAL", y="Y_ORIGINAL", kind="scatter", title="Gaze and Fixations" )
-    self.df_fixations[ (self.df_fixations["TIME"] >= start_time) and (self.df_fixations["TIME"] <= end_time) ].plot( x="X_ORIGINAL", y="Y_ORIGINAL", kind="scatter", title="Gaze and Fixations" )
+    self.df_gaze.plot( x="X_ORIGINAL", y="Y_ORIGINAL", kind="scatter", title="Gaze and Fixations", xlabel="X", ylabel="Y" )
+    self.df_fixations.plot( x="X_ORIGINAL", y="Y_ORIGINAL", kind="scatter", title="Gaze and Fixations", xlabel="X", ylabel="Y" )
   
-  def plot_gaze_and_fixations_by_time(self, start_time: float, end_time: float):
-    """Plots the gaze and fixations between the start_time and end_time"""
-    self.df_gaze[ (self.df_gaze["TIME"] >= start_time) and (self.df_gaze["TIME"] <= end_time) ].plot( x="TIME", y="duration", kind="scatter", title="Gaze and Fixations" )
-    self.df_fixations[ (self.df_fixations["TIME"] >= start_time) and (self.df_fixations["TIME"] <= end_time) ].plot( x="TIME", y="duration", kind="scatter", title="Gaze and Fixations" )
-
-  def plot_gaze_and_fixations_by_time_and_duration(self, start_time: float, end_time: float):
-    """Plots the gaze and fixations between the start_time and end_time"""
-    self.df_gaze[ (self.df_gaze["TIME"] >= start_time) and (self.df_gaze["TIME"] <= end_time) ].plot( x="TIME", y="duration", kind="scatter", title="Gaze and Fixations" )
-    self.df_fixations[ (self.df_fixations["TIME"] >= start_time) and (self.df_fixations["TIME"] <= end_time) ].plot( x="TIME", y="duration", kind="scatter", title="Gaze and Fixations" )
 
