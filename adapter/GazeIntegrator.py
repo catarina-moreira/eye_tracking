@@ -1,7 +1,7 @@
 import pandas as pd
 
-from data.eyegaze.EyeGaze import EyeGaze
-from data.reflacx.REFLACX import REFLACX
+from data.EyeGaze import EyeGaze
+from data.REFLACX import REFLACX
 
 from analytics.GazeAnalyzer import GazeAnalyzer
 
