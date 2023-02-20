@@ -62,6 +62,7 @@ class MIMIC_EYE():
 		with open(c.CACHE_PATH, 'rb') as pickle_file:
 			c.CACHE = pkl.load(pickle_file)
 
+	# comment this function
 	
 	def initialize_mimic_eye(self):
 		"""initialize_mimic_eye function """
@@ -163,14 +164,13 @@ class MIMIC_EYE():
 						
 							cxr.setAbnormalityDict(ell_annotation_dict)
 
-
 							# moving gaze files to the XAMI-MIMIC folder
-							# source_gaze_file_path = c.REFLACX_GAZE_SOURCE_PATH(c.REFLACX_SOURCE, row.id)
-							# destinatination_gaze_folder_path = c.REFLACX_RAW_PATH(c.DATASET_PATH, row.subject_id, row.id)
-							# destinatination_gaze_folder_path.replace("gaze.csv", "")
+							source_gaze_file_path = c.REFLACX_GAZE_SOURCE_PATH(c.REFLACX_SOURCE, row.id)
+							destinatination_gaze_folder_path = c.REFLACX_RAW_PATH(c.DATASET_PATH, row.subject_id, row.id)
+							destinatination_gaze_folder_path.replace("gaze.csv", "")
 							
-							# print(f"Copying file from {source_gaze_file_path} to {destinatination_gaze_folder_path}")
-							# shutil.copy(source_gaze_file_path, destinatination_gaze_folder_path )
+							print(f"Copying file from {source_gaze_file_path} to {destinatination_gaze_folder_path}")
+							shutil.copy(source_gaze_file_path, destinatination_gaze_folder_path )
 						
 					cxr.setFixationsDict(fixations_dict)
 					cxr.setGazeDict(gaze_dict)

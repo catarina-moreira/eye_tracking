@@ -7,9 +7,10 @@ class Constants():
 
 	# only change this path!
 	# main path where the dataset is stored
-	DATASET_PATH = os.path.join("/", "Volumes", "SD_DISK", "XAMI-MIMICv2.0", "")
-	REFLACX_SOURCE = os.path.join("/", "Volumes", "SD_DISK", "REFLACX", "")
-
+	# DATASET_PATH = os.path.join("Volumes", "SD_DISK", "XAMI-MIMICv2.0", "")
+	DATASET_PATH = os.path.join("D:", " ", "XAMI-MIMICv2.0", "")
+	DATASET_PATH = DATASET_PATH.replace(" ", "")
+	
 	# patient main path
 	PATIENT_PATH = lambda dataset_path, patient_id: os.path.join(dataset_path, "patient_" + str(patient_id))
 
@@ -61,21 +62,20 @@ class Constants():
 	# reflacx chest annotation
 	REFLACX_CHEST_ANNOTATION_PATH = lambda dataset_path, patient_id, reflacx_id : os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", reflacx_id, "chest_bounding_box.csv" )
 
-
 	# main path where MIMIC-EYE's state will be saved
 	CACHE_PATH = os.path.join(".", "cache", "mimic_eye_state.pkl")
 	
 	# main unit of MIMIC-EYE where the dataset will be stored in memory
 	CACHE = {
-						"REFLACX" : 0,							# counts how many patients are in REFLACX dataset
-						"EYE_GAZE" : 0,							# counts how many patients are in EYE GAZE dataset
-						"EYE_GAZE_PATIENTS" : [],		# lists the patient ids that are in EYE GAZE dataset
-						"REFLACX_PATIENTS" : [],		# lists the patient ids that are in REFLACX dataset
-						"OVERLAP" : [],							# lists the patient ids that overlap both datasets
-						"PATIENTS" : {},						# dictionary containing all information about a single patient
-						"DICOM_TO_XRAY" : {},				# dictionary mapping a DICOMID to an XRay object"
-						"XRAY_TO_PATIENT" 	: {},		# dictionary mapping an XRayID to a PatientID
-						"XRAY_TO_DIAGNOSIS" : {},		# dictionary mapping an XRayID to a Diagnosis (Eye Gaze only)
+						"REFLACX" : 0,				# counts how many patients are in REFLACX dataset
+						"EYE_GAZE" : 0,				# counts how many patients are in EYE GAZE dataset
+						"EYE_GAZE_PATIENTS" : [],	# lists the patient ids that are in EYE GAZE dataset
+						"REFLACX_PATIENTS" : [],	# lists the patient ids that are in REFLACX dataset
+						"OVERLAP" : [],				# lists the patient ids that overlap both datasets
+						"PATIENTS" : {},			# dictionary containing all information about a single patient
+						"DICOM_TO_XRAY" : {},		# dictionary mapping a DICOMID to an XRay object"
+						"XRAY_TO_PATIENT" 	: {},	# dictionary mapping an XRayID to a PatientID
+						"XRAY_TO_DIAGNOSIS" : {},	# dictionary mapping an XRayID to a Diagnosis (Eye Gaze only)
 	}
 
 	# for display purposes ----------------------------------------------
@@ -92,24 +92,24 @@ class Constants():
 
 	COLOR_MAP = {
     "CARDIAC SILHOUETTE" 			: "#C0392B",
-		"ENLARGED CARDIAC SILHOUETTE" : "#D98880",
-    "LEFT CLAVICLE" 					: "#AF7AC5",
-    "RIGHT CLAVICLE" 					: "#AF7AC5",
-    "LEFT COSTOPHRENIC ANGLE" : "#2471A3",
-    "RIGHT COSTOPHRENIC ANGLE": "#2471A3",
-    "LEFT HILAR STRUCTURES" 	: "#76D7C4",
-    "RIGHT HILAR STRUCTURES" 	: "#76D7C4",
-    "LEFT LOWER LUNG ZONE" 		: "#F4D03F",
-    "RIGHT LOWER LUNG ZONE" 	: "#F4D03F",
-    "LEFT LUNG" 							: "#F4F6F7",
-    "RIGHT LUNG" 							: "#F4F6F7",
+	"ENLARGED CARDIAC SILHOUETTE" 	: "#D98880",
+    "LEFT CLAVICLE" 				: "#AF7AC5",
+    "RIGHT CLAVICLE" 				: "#AF7AC5",
+    "LEFT COSTOPHRENIC ANGLE" 		: "#2471A3",
+    "RIGHT COSTOPHRENIC ANGLE"		: "#2471A3",
+    "LEFT HILAR STRUCTURES" 		: "#76D7C4",
+    "RIGHT HILAR STRUCTURES" 		: "#76D7C4",
+    "LEFT LOWER LUNG ZONE" 			: "#F4D03F",
+    "RIGHT LOWER LUNG ZONE" 		: "#F4D03F",
+    "LEFT LUNG" 					: "#F4F6F7",
+    "RIGHT LUNG" 					: "#F4F6F7",
     "LEFT MID LUNG ZONE" 			: "#F39C12",
-    "RIGHT MID LUNG ZONE" 		: "#F39C12",
-    "LEFT UPPER LUNG ZONE" 		: "#27AE60",
-    "RIGHT UPPER LUNG ZONE" 	: "#27AE60",
-    "TRACHEA" 								: "#F9E79F",
+    "RIGHT MID LUNG ZONE" 			: "#F39C12",
+    "LEFT UPPER LUNG ZONE" 			: "#27AE60",
+    "RIGHT UPPER LUNG ZONE" 		: "#27AE60",
+    "TRACHEA" 						: "#F9E79F",
     "UPPER MEDIASTINUM" 			: "#AED6F1",
-		"OTHER" 									: "#F4F6F7",
-		"CONSOLIDATION"						: "#F7DC6F",
-		"PNEUMOTHORAX"						: "#5DADE2",
+	"OTHER" 						: "#F4F6F7",
+	"CONSOLIDATION"					: "#F7DC6F",
+	"PNEUMOTHORAX"					: "#5DADE2",
 }
