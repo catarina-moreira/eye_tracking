@@ -63,7 +63,7 @@ class Constants():
 	REFLACX_CHEST_ANNOTATION_PATH = lambda dataset_path, patient_id, reflacx_id : os.path.join(dataset_path, "patient_" + str(patient_id), "REFLACX", reflacx_id, "chest_bounding_box.csv" )
 
 	# main path where MIMIC-EYE's state will be saved
-	CACHE_PATH = os.path.join(".", "cache", "mimic_eye_state.pkl")
+	CACHE_PATH = os.path.join(  "cache", "mimic_eye_state_mac.pkl")
 	
 	# main unit of MIMIC-EYE where the dataset will be stored in memory
 	CACHE = {
